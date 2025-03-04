@@ -1,0 +1,133 @@
+### Fastapi + Prefect + Business-rule Demo
+
+当前项目演示如何通过Fastapi接口，动态添加规则，通过business-rule对数据和规则进行比对后，使用prefect flow的方式进行执行。
+并可以通过prefect提供的UI查看任务信息
+
+1. 初始化db
+
+```shell
+python app/init_db.py
+```
+
+2. 启动API服务
+
+```shell
+python app/main.py
+```
+
+3. 启动prefect dashboard
+
+```shell
+ prefect server start
+```
+
+4. 添加测试数据
+
+使用Postman 请求
+POST /tasks 接口
+```json
+{
+  "name": "test1",
+  "rules": [
+    {
+      "conditions": {
+        "all": [
+          {
+            "name": "daily_consume",
+            "operator": "less_than",
+            "value": 110
+          },
+          {
+            "name": "balance",
+            "operator": "greater_than",
+            "value": 20
+          },
+          {
+            "name": "roi",
+            "operator": "greater_than",
+            "value": 1
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "update_ad_config"
+        }
+      ]
+    }
+  ]
+}'
+
+```
+
+```json
+
+{
+  "name": "test2",
+  "rules": [
+    {
+      "conditions": {
+        "any": [
+          {
+            "name": "daily_consume",
+            "operator": "less_than",
+            "value": 110
+          },
+          {
+            "name": "balance",
+            "operator": "greater_than",
+            "value": 20
+          },
+          {
+            "name": "roi",
+            "operator": "greater_than",
+            "value": 1
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "update_ad_config"
+        }
+      ]
+    }
+  ]
+}
+
+
+```
+
+```json
+{
+  "name": "test3",
+  "rules": [
+    {
+      "conditions": {
+        "any": [
+          {
+            "name": "daily_consume",
+            "operator": "less_than",
+            "value": 110
+          },
+          {
+            "name": "balance",
+            "operator": "greater_than",
+            "value": 20
+          },
+          {
+            "name": "roi",
+            "operator": "greater_than",
+            "value": 1
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "update_ad_config"
+        }
+      ]
+    }
+  ]
+}
+
+```
