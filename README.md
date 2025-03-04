@@ -1,30 +1,36 @@
 ### Fastapi + Prefect + Business-rule Demo
 
 当前项目演示如何通过Fastapi接口，动态添加规则，通过business-rule对数据和规则进行比对后，使用prefect flow的方式进行执行。
-并可以通过prefect提供的UI查看任务信息
+并可以通过prefect提供的UI查看任务信息 
+1. 安装依赖
+```shell
+pip install -r requirements.txt
+```
 
-1. 初始化db
+2. 初始化db
 
 ```shell
 python app/init_db.py
 ```
 
-2. 启动API服务
+3. 启动API服务
 
 ```shell
 python app/main.py
 ```
 
-3. 启动prefect dashboard
+4. 启动prefect dashboard
 
 ```shell
  prefect server start
 ```
 
-4. 添加测试数据
+5. 添加测试数据
 
 使用Postman 请求
 POST /tasks 接口
+
+#### case 1
 ```json
 {
   "name": "test1",
@@ -56,9 +62,10 @@ POST /tasks 接口
       ]
     }
   ]
-}'
+}
 
 ```
+#### case 2
 
 ```json
 
@@ -96,6 +103,7 @@ POST /tasks 接口
 
 
 ```
+#### case 3
 
 ```json
 {
