@@ -3,6 +3,7 @@ from app.models import RuleTask
 from app.database import SessionLocal
 from app.rules import DataVariables, Actions
 from business_rules.engine import run_all
+from prefect.deployments import run_deployment
 
 fake_data = {
     "test1": {"daily_consume": 100, "balance": 1000, "roi": 0.1},
@@ -27,7 +28,7 @@ def evaluate_rule(task: RuleTask, data):
     run_all(
         rule_list=task.rules,
         defined_variables=DataVariables(data),
-        defined_actions=Actions(task.name),
+        defined_actions=Actions(task),
         stop_on_first_trigger=False
     )
 
@@ -38,3 +39,12 @@ def rule_checker_flow():
     for task in tasks:
         data = get_realtime_data(task.name)
         evaluate_rule(task, data)
+
+
+@flow(name="remote_rule_checker_flow")
+def remote_rule_checker_flow():
+    run_deployment(name="Rule Checker Flow/Rule Checker Flow")
+
+
+if __name__ == "__main__":
+    rule_checker_flow.serve(name="Rule Checker Flow")

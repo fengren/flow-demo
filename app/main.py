@@ -28,7 +28,7 @@ if __name__ == "__main__":
     import uvicorn
 
     scheduler = BackgroundScheduler()
-    scheduler.add_job(rule_checker.rule_checker_flow, 'interval', seconds=10)
+    scheduler.add_job(rule_checker.remote_rule_checker_flow, 'interval', seconds=10)
     scheduler.start()
 
     uvicorn.run(app='main:app', host="0.0.0.0", port=8080, reload=True)
