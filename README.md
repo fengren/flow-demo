@@ -31,12 +31,12 @@ python app/main.py
 
 ```shell
  PREFECT_API_URL=http://127.0.0.1:4200/api python app/flows/rule_checker.py
+ ```
 
 4.2 启动update_ad_config的Deployment
 
 ```shell
  PREFECT_API_URL=http://127.0.0.1:4200/api python app/flows/update_ad_config.py
-
 ```
 
 5. 添加测试数据
