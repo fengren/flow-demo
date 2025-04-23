@@ -6,7 +6,9 @@
 1. 安装依赖
 
 ```shell
-pip install -r requirements.txt
+uv venv
+source .venv/bin/activate
+uv pip install -r requirements.txt
 ```
 
 2. 初始化db
